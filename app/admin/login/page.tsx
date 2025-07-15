@@ -35,7 +35,8 @@ export default function AdminLogin() {
         setError("Invalid credentials")
       } else {
         const session = await getSession()
-        if (session?.user?.role === "admin") {
+       
+        if ((session?.user as { role?: string })?.role === "admin") {
           router.push("/admin/dashboard")
         } else {
           setError("Access denied")
