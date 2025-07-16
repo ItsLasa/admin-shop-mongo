@@ -12,7 +12,7 @@ export async function GET() {
     }))
 
     return NextResponse.json(formattedOrders)
-  } catch (error) {
+  } catch (_) {
     return NextResponse.json({ error: "Failed to fetch orders" }, { status: 500 })
   }
 }
