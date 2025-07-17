@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Star, ShoppingCart, Package } from "lucide-react"
 import type { Product } from "@/types/product"
+import Image from "next/image"
 
 interface ProductCardProps {
   product: Product
@@ -39,11 +40,14 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
         {/* Product Image */}
         <div className="relative aspect-square bg-gray-200 rounded-t-lg overflow-hidden">
           {product.images && product.images.length > 0 ? (
-            <img
-              src={product.images[0] || "/placeholder.svg"}
-              alt={product.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+          
+            <Image width={0} height={0}
+            src={product.images[0] || "/placeholder.svg"}
+            alt={product.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+            
             />
+
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <Package className="h-16 w-16 text-gray-400" />
