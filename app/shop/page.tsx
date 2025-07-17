@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react";
+
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -70,38 +71,38 @@ export default function ShopPage() {
     }
   }
 
-  const filterAndSortProducts = () => {
+  const filterAndSortProducts = useCallback(() => {
     const filtered = products.filter((product) => {
       const matchesSearch =
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesCategory = selectedCategory === "all" || product.category === selectedCategory
-      const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1]
-      const inStock = product.stock > 0
-
-      return matchesSearch && matchesCategory && matchesPrice && inStock
-    })
-
-    // Sort products
+        product.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
+      const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+      const inStock = product.stock > 0;
+  
+      return matchesSearch && matchesCategory && matchesPrice && inStock;
+    });
+  
     filtered.sort((a, b) => {
       switch (sortBy) {
         case "name":
-          return a.name.localeCompare(b.name)
+          return a.name.localeCompare(b.name);
         case "name-desc":
-          return b.name.localeCompare(a.name)
+          return b.name.localeCompare(a.name);
         case "price-low":
-          return a.price - b.price
+          return a.price - b.price;
         case "price-high":
-          return b.price - a.price
+          return b.price - a.price;
         case "featured":
-          return b.featured ? 1 : -1
+          return b.featured ? 1 : -1;
         default:
-          return 0
+          return 0;
       }
-    })
-
-    setFilteredProducts(filtered)
-  }
+    });
+  
+    setFilteredProducts(filtered);
+  }, [products, searchTerm, selectedCategory, priceRange, sortBy]);
+  
 
   const clearFilters = () => {
     setSearchTerm("")
